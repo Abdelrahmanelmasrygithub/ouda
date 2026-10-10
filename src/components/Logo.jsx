@@ -2,6 +2,7 @@ import { useId, useState } from "react";
 import { motion } from "framer-motion";
 import { company } from "../data/plan.js";
 import { EASE } from "./AnimatedText.jsx";
+import { logoUrl } from "../lib/assets.js";
 
 /* لوجو مؤقت (بيظهر بس لو ملف اللوجو الحقيقي مش موجود) */
 function FallbackMark({ size, animate }) {
@@ -59,7 +60,7 @@ export default function Logo({ size = 44, showText = true, animate = true }) {
       ) : (
         <motion.img
           className="logo-img"
-          src={company.logoSrc}
+          src={logoUrl || company.logoSrc}
           alt={company.name}
           style={{ height: size }}
           onError={() => setFailed(true)}

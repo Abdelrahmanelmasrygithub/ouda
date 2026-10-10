@@ -4,6 +4,7 @@
   --surface: #ffffff;
   --ink: #0d1b3d;
   --muted: #5a6785;
+  --text: #34405e;
   --line: #e2e6f0;
 
   --primary: #2b59ff;
@@ -463,18 +464,28 @@ a {
   font-size: 0.75rem;
 }
 .orbit-chip.c1 {
-  top: 6%;
-  inset-inline-start: -2%;
+  top: 3%;
+  inset-inline-start: 4%;
 }
 .orbit-chip.c2 {
-  top: 48%;
+  top: 19%;
   inset-inline-end: -6%;
-  animation-delay: -1.6s;
+  animation-delay: -1s;
 }
 .orbit-chip.c3 {
-  bottom: 6%;
-  inset-inline-start: 6%;
-  animation-delay: -3.2s;
+  top: 44%;
+  inset-inline-start: -9%;
+  animation-delay: -2s;
+}
+.orbit-chip.c4 {
+  top: 68%;
+  inset-inline-end: -4%;
+  animation-delay: -3s;
+}
+.orbit-chip.c5 {
+  bottom: 0;
+  inset-inline-start: 10%;
+  animation-delay: -4s;
 }
 @keyframes bob {
   50% {
@@ -485,21 +496,12 @@ a {
 /* ============ قسم الحلقة ============ */
 .cycle {
   position: relative;
-  height: calc(var(--n) * 85vh);
-}
-.cycle-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100svh;
-  display: flex;
-  flex-direction: column;
-  padding: calc(var(--nav-h) + 14px) var(--pad-x) 22px;
-  overflow: hidden;
+  padding: 100px var(--pad-x) 60px;
 }
 .cycle-head {
+  max-width: 1240px;
+  margin: 0 auto 48px;
   text-align: center;
-  margin-bottom: 6px;
 }
 .eyebrow {
   display: inline-block;
@@ -509,44 +511,53 @@ a {
   letter-spacing: 0.04em;
 }
 .cycle-head h2 {
-  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-size: clamp(1.6rem, 3.6vw, 2.7rem);
   font-weight: 800;
-  line-height: 1.3;
+  line-height: 1.35;
 }
-.cycle-grid {
-  flex: 1;
-  min-height: 0;
-  width: 100%;
+.cycle-body {
   max-width: 1240px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(24px, 5vw, 80px);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  gap: clamp(28px, 5vw, 80px);
+  align-items: start;
 }
-.detail-col {
+.steps-col {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 .ring-col {
+  position: sticky;
+  top: calc(var(--nav-h) + 28px);
   display: grid;
-  place-items: center;
-  min-width: 0;
+  justify-items: center;
+  gap: 16px;
 }
 
-/* بطاقة التفاصيل */
-.detail {
+/* --- بطاقة الخطوة --- */
+.step-card {
   position: relative;
   overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: clamp(22px, 3.2vw, 42px);
+  padding: clamp(22px, 3.4vw, 44px);
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 28px;
+  opacity: 0.72;
+  transform: scale(0.988);
+  transition: opacity 0.45s, transform 0.45s, border-color 0.45s;
 }
-.detail::before {
+.step-card.is-active {
+  opacity: 1;
+  transform: none;
+  border-color: rgba(43, 89, 255, 0.3);
+}
+.step-card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -554,103 +565,400 @@ a {
   height: 5px;
   background: var(--grad);
 }
-.detail-bg-num {
-  position: absolute;
-  inset-inline-start: 18px;
-  bottom: -26px;
-  font-size: clamp(7rem, 15vw, 12rem);
+.step-card.is-final {
+  border-color: rgba(255, 122, 61, 0.45);
+  box-shadow: var(--shadow), 0 0 0 5px rgba(255, 122, 61, 0.08);
+}
+
+.step-head {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(14px, 2.4vw, 28px);
+}
+.step-num {
+  flex: none;
+  font-size: clamp(2.8rem, 6.4vw, 4.8rem);
   font-weight: 800;
   line-height: 1;
-  color: rgba(43, 89, 255, 0.06);
-  pointer-events: none;
-  user-select: none;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.step-head-text {
+  min-width: 0;
+  display: grid;
+  gap: 12px;
+}
+.step-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
 }
 .step-chip {
-  align-self: flex-start;
   background: rgba(43, 89, 255, 0.1);
   color: var(--primary);
   font-weight: 800;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   padding: 3px 14px;
   border-radius: 999px;
 }
-.detail-title {
-  display: block;
-  font-size: clamp(1.5rem, 3.2vw, 2.4rem);
-  font-weight: 800;
-  line-height: 1.3;
-}
-.detail-summary {
+.step-tag {
+  border: 1px solid var(--line);
+  background: var(--bg);
   color: var(--muted);
-  font-size: clamp(0.98rem, 1.5vw, 1.1rem);
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 3px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
 }
-.detail-list {
+.step-final-badge {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.82rem;
+  padding: 3px 14px;
+  border-radius: 999px;
+}
+.step-title {
+  display: block;
+  font-size: clamp(1.4rem, 2.9vw, 2.15rem);
+  font-weight: 800;
+  line-height: 1.45;
+}
+.final-note {
+  padding: 12px 18px;
+  border-radius: 14px;
+  background: rgba(255, 122, 61, 0.1);
+  border-inline-start: 4px solid var(--accent);
+  color: #8a3a0f;
+  font-weight: 700;
+  font-size: 0.98rem;
+}
+
+/* --- النقاط --- */
+.points {
   list-style: none;
+  position: relative;
   display: grid;
-  gap: 10px;
+  gap: 26px;
 }
-.detail-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  font-weight: 600;
+.points::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 17px;
+  top: 22px;
+  bottom: 22px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(var(--primary), var(--primary-2), var(--accent));
+  opacity: 0.28;
 }
-.detail-list i {
-  flex: none;
-  width: 10px;
-  height: 10px;
-  margin-top: 0.7em;
+.point {
+  position: relative;
+  padding-inline-start: 60px;
+}
+.point-idx {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
   border-radius: 50%;
-  background: var(--grad);
+  background: var(--surface);
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 0.95rem;
 }
-.detail-meta {
+.point h4 {
+  font-size: 1.12rem;
+  font-weight: 800;
+  line-height: 36px;
+  margin-bottom: 4px;
+}
+.point p {
+  color: var(--text);
+  font-size: 1.02rem;
+  line-height: 2;
+}
+
+/* --- شريط الأرقام داخل نقطة --- */
+.flow {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 22px;
+  align-items: stretch;
+  gap: 10px;
+  margin-top: 16px;
+}
+.flow-item {
+  flex: 1 1 130px;
+  padding: 14px 14px 12px;
+  text-align: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(43, 89, 255, 0.07), rgba(122, 77, 255, 0.07));
+  border: 1px solid rgba(43, 89, 255, 0.18);
+}
+.flow-item b {
+  display: block;
+  font-size: 1.7rem;
+  font-weight: 800;
+  line-height: 1.3;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.flow-item span {
   color: var(--muted);
-  font-size: 0.92rem;
-  padding-top: 12px;
-  border-top: 1px dashed var(--line);
+  font-size: 0.82rem;
+  font-weight: 700;
 }
-.detail-meta b {
-  color: var(--ink);
+.flow-arrow {
+  align-self: center;
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 1.3rem;
 }
-.detail-next {
+.flow-note {
+  flex-basis: 100%;
+  padding: 7px 14px;
+  border-radius: 10px;
+  background: rgba(255, 122, 61, 0.1);
+  color: #8a3a0f;
+  font-weight: 700;
+  font-size: 0.84rem;
+}
+
+/* --- الهدف والملحوظة --- */
+.goal {
   position: relative;
-  z-index: 1;
+  display: grid;
+  gap: 8px;
+  padding: 22px 26px;
+  border-radius: 18px;
+  color: #fff;
+  background: linear-gradient(135deg, #0d1b3d, #1b2f6b 60%, #3a2a8f);
+  box-shadow: 0 18px 36px -18px rgba(13, 27, 61, 0.7);
+}
+.goal b {
+  color: #ffb68f;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+}
+.goal p {
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.95;
+}
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: rgba(255, 122, 61, 0.07);
+  border: 1.5px dashed rgba(255, 122, 61, 0.55);
+  color: #8a3a0f;
+}
+.note svg {
+  flex: none;
+  margin-top: 2px;
+}
+.note b {
+  display: block;
+  font-size: 0.88rem;
+}
+.note p {
+  color: var(--text);
+  line-height: 1.9;
+  font-size: 0.98rem;
+}
+
+/* --- الصور --- */
+.figs {
+  display: grid;
+  gap: 16px;
+}
+.figs.two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.figs.many {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.fig {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+.fig-btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: linear-gradient(135deg, #eef1fb, #f8f1ec);
+  cursor: zoom-in;
+}
+.fig-btn img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  object-fit: contain;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fig-btn:hover img {
+  transform: scale(1.035);
+}
+/* صورة واحدة طولية (زي صورة ريل): عرض معتدل في النص */
+.figs.one .fig-btn.portrait {
+  max-width: 380px;
+  margin-inline: auto;
+}
+.figs.one .fig-btn.portrait img {
+  max-height: none;
+}
+/* صورتين جنب بعض: نفس الارتفاع، وخلفية داكنة تتماشى مع لقطات الشاشة */
+.figs.two {
+  align-items: stretch;
+}
+.figs.two .fig {
+  grid-template-rows: 1fr auto;
+}
+.figs.two .fig-btn {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: #0a1024;
+}
+.fig-zoom {
+  position: absolute;
+  top: 10px;
+  inset-inline-end: 10px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(13, 27, 61, 0.7);
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.fig-btn:hover .fig-zoom,
+.fig-btn:focus-visible .fig-zoom {
+  opacity: 1;
+}
+.fig figcaption {
+  text-align: center;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.86rem;
+}
+.fig-empty {
+  aspect-ratio: 16 / 10;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 6px;
+  padding: 14px;
+  text-align: center;
+  color: var(--muted);
+  border: 2px dashed #c2cbe3;
+  border-radius: 16px;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(43, 89, 255, 0.045) 0 12px,
+    transparent 12px 24px
+  );
+}
+.fig-empty b {
+  font-size: 0.95rem;
+}
+.fig-empty code {
+  direction: ltr;
+  max-width: 100%;
+  word-break: break-all;
+  font-size: 0.74rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+
+/* --- تذييل البطاقة والفاصل --- */
+.step-foot {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 8px 16px;
-  font-size: 0.88rem;
+  padding-top: 18px;
+  border-top: 1px dashed var(--line);
   color: var(--muted);
   font-weight: 600;
+  font-size: 0.9rem;
 }
-.detail-next button {
+.step-foot button {
   border: 1px solid var(--line);
   background: var(--bg);
   color: var(--ink);
   font-weight: 700;
   font-size: 0.92rem;
-  padding: 7px 16px;
+  padding: 7px 18px;
   border-radius: 999px;
   transition: 0.2s;
 }
-.detail-next button:hover {
+.step-foot button:hover {
   background: var(--ink);
   color: #fff;
   border-color: var(--ink);
 }
-.detail-next button b {
+.step-foot button b {
   display: inline-block;
   margin-inline-start: 4px;
 }
+.between {
+  position: relative;
+  height: 64px;
+  display: grid;
+  place-items: center;
+}
+.between::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, #c9d1e6 0 6px, transparent 6px 12px);
+}
+.between span {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--primary);
+  font-weight: 800;
+  animation: bob 2.4s ease-in-out infinite;
+}
 
-/* الحلقة نفسها */
+/* --- الحلقة --- */
 .ring {
   position: relative;
-  width: min(46vw, 64svh, 560px);
+  width: min(100%, 420px, max(240px, calc(100svh - var(--nav-h) - 190px)));
   aspect-ratio: 1;
 }
 .ring-svg {
@@ -689,19 +997,18 @@ a {
   box-shadow: 0 0 0 6px rgba(255, 122, 61, 0.2), 0 0 26px rgba(255, 122, 61, 0.65);
   pointer-events: none;
 }
-
 .node {
   position: absolute;
   z-index: 2;
   transform: translate(-50%, -50%);
-  width: clamp(34px, 5.4vw, 54px);
+  width: clamp(36px, 11%, 52px);
   aspect-ratio: 1;
   border-radius: 50%;
   border: 2px solid var(--line);
   background: var(--surface);
   color: var(--muted);
   font-weight: 800;
-  font-size: clamp(0.8rem, 1.5vw, 1.05rem);
+  font-size: clamp(0.78rem, 1.4vw, 1rem);
   display: grid;
   place-items: center;
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s,
@@ -766,7 +1073,6 @@ a {
 .node:hover .tip {
   opacity: 1;
 }
-
 .ring-center {
   position: absolute;
   inset: 24%;
@@ -779,7 +1085,7 @@ a {
 .ring-center small {
   color: var(--muted);
   font-weight: 700;
-  font-size: clamp(0.75rem, 1.4vw, 0.95rem);
+  font-size: clamp(0.75rem, 1.3vw, 0.92rem);
 }
 .ring-center-logo {
   margin-bottom: 6px;
@@ -787,7 +1093,7 @@ a {
 }
 .ring-num {
   display: block;
-  font-size: clamp(2.6rem, 7.5vw, 5.2rem);
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
   font-weight: 800;
   line-height: 1.1;
   background: var(--grad);
@@ -795,45 +1101,63 @@ a {
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
-.scroll-hint {
-  position: absolute;
-  bottom: 14px;
-  inset-inline: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+.ring-caption {
+  min-height: 52px;
+  text-align: center;
+}
+.ring-caption small {
+  display: block;
   color: var(--muted);
-  font-size: 0.85rem;
-  font-weight: 600;
-  pointer-events: none;
+  font-weight: 700;
+  font-size: 0.82rem;
 }
-.mouse {
-  width: 20px;
-  height: 30px;
-  border: 2px solid var(--muted);
-  border-radius: 12px;
+.ring-caption strong {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+/* --- تكبير الصورة --- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
   display: grid;
+  place-content: center;
   justify-items: center;
-  padding-top: 5px;
+  gap: 14px;
+  padding: 24px;
+  background: rgba(8, 14, 36, 0.86);
+  backdrop-filter: blur(8px);
+  cursor: zoom-out;
 }
-.mouse i {
-  width: 3px;
-  height: 7px;
-  border-radius: 2px;
-  background: var(--muted);
-  animation: wheel 1.6s ease-in-out infinite;
+.lightbox img {
+  max-width: min(92vw, 1200px);
+  max-height: 82vh;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
+  cursor: default;
 }
-@keyframes wheel {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(9px);
-    opacity: 0;
-  }
+.lightbox p {
+  color: #fff;
+  font-weight: 600;
+}
+.lightbox-close {
+  position: absolute;
+  top: 18px;
+  inset-inline-end: 18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 1.1rem;
+  transition: background 0.2s;
+}
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* ============ الخاتمة ============ */
@@ -916,42 +1240,105 @@ a {
     display: none;
   }
 
-  .cycle-head h2 {
-    font-size: 1.2rem;
+  .cycle {
+    padding-top: 72px;
   }
-  .cycle-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(0, 1fr);
-    gap: 10px;
-    align-items: start;
+  .cycle-head {
+    margin-bottom: 22px;
   }
+  .cycle-body {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  /* الحلقة تبقى شريط صغير ثابت فوق */
   .ring-col {
     order: -1;
+    top: var(--nav-h);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin: 0 calc(var(--pad-x) * -1) 18px;
+    padding: 8px var(--pad-x);
+    background: rgba(246, 247, 251, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
   }
   .ring {
-    width: min(70vw, 36svh);
+    flex: none;
+    width: 104px;
   }
-  .ring-center-logo {
+  .node {
+    width: 24px;
+    border-width: 1.5px;
+    font-size: 0.6rem;
+  }
+  .node.current {
+    box-shadow: 0 0 0 4px rgba(43, 89, 255, 0.14);
+  }
+  .ring-dot {
+    width: 9px;
+    height: 9px;
+    box-shadow: 0 0 0 4px rgba(255, 122, 61, 0.2);
+  }
+  .ring-center small,
+  .ring-center-logo,
+  .tip {
     display: none;
   }
   .ring-num {
-    font-size: clamp(2rem, 9vw, 3rem);
+    font-size: 1.6rem;
   }
-  .detail {
-    padding: 18px;
-    gap: 9px;
-    max-height: 100%;
-    overflow-y: auto;
+  .ring-caption {
+    min-height: 0;
+    text-align: start;
   }
-  .detail-list {
+  .ring-caption strong {
+    font-size: 1.05rem;
+  }
+
+  .step-card {
+    gap: 22px;
+  }
+  .step-head {
+    flex-direction: column;
     gap: 6px;
-    font-size: 0.93rem;
   }
-  .detail-bg-num {
-    display: none;
+  .points {
+    gap: 22px;
   }
-  .scroll-hint {
-    display: none;
+  .point {
+    padding-inline-start: 52px;
+  }
+  .point-idx {
+    width: 32px;
+    height: 32px;
+    font-size: 0.88rem;
+  }
+  .points::before {
+    inset-inline-start: 15px;
+  }
+  .point h4 {
+    line-height: 32px;
+  }
+  .point p {
+    font-size: 0.98rem;
+    line-height: 1.95;
+  }
+  .figs.two {
+    grid-template-columns: 1fr;
+  }
+  .flow {
+    flex-direction: column;
+  }
+  .flow-item {
+    flex: 0 0 auto;
+  }
+  .flow-arrow {
+    transform: rotate(-90deg);
   }
 }
 
@@ -959,9 +1346,6 @@ a {
   .orbit-chip {
     font-size: 0.74rem;
     padding: 4px 10px 4px 8px;
-  }
-  .tip {
-    display: none;
   }
 }
 

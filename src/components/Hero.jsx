@@ -4,7 +4,7 @@ import { SplitWords, FadeUp } from "./AnimatedText.jsx";
 import { hero, steps } from "../data/plan.js";
 
 function OrbitArt() {
-  const chips = steps.slice(0, 3);
+  const chips = steps;
   return (
     <div className="orbit" aria-hidden="true">
       <div className="orbit-ring r1" style={{ "--d": "38s" }}>
@@ -37,7 +37,7 @@ function OrbitArt() {
           transition={{ delay: 1 + i * 0.2, type: "spring", stiffness: 140, damping: 13 }}
         >
           <b>{i + 1}</b>
-          {s.title}
+          {s.short || s.title}
         </motion.span>
       ))}
     </div>
