@@ -1,7 +1,49 @@
 import { motion } from "framer-motion";
 import Logo from "./Logo.jsx";
-import { SplitWords, FadeUp } from "./AnimatedText.jsx";
-import { hero, steps } from "../data/plan.js";
+import { SplitWords, FadeUp, EASE } from "./AnimatedText.jsx";
+import { hero, steps, supervisor } from "../data/plan.js";
+
+/* ظهور هادئ: فيد + رفعة بسيطة + blur بيروق */
+const soft = {
+  hidden: { opacity: 0, y: 12, filter: "blur(6px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 1.1, ease: EASE },
+  },
+};
+
+const bar = {
+  hidden: { scaleY: 0 },
+  show: { scaleY: 1, transition: { duration: 1.2, ease: EASE } },
+};
+
+/* تحت إشراف / الاسم / المسمى — بتظهر بعد باقي عناصر الهيرو */
+function Supervisor() {
+  return (
+    <motion.div
+      className="supervisor"
+      initial="hidden"
+      animate="show"
+      variants={{
+        hidden: {},
+        show: { transition: { delayChildren: 2, staggerChildren: 0.35 } },
+      }}
+    >
+      <motion.span className="sv-bar" variants={bar} style={{ transformOrigin: "top" }} />
+      <div className="sv-text">
+        <motion.small variants={soft}>{supervisor.label}</motion.small>
+        <motion.strong dir="ltr" variants={soft}>
+          {supervisor.name}
+        </motion.strong>
+        <motion.span className="sv-role" dir="ltr" variants={soft}>
+          {supervisor.role}
+        </motion.span>
+      </div>
+    </motion.div>
+  );
+}
 
 function OrbitArt() {
   const chips = steps;
@@ -83,6 +125,8 @@ export default function Hero() {
               <span>↻ {hero.statsLoop}</span>
             </div>
           </FadeUp>
+
+          <Supervisor />
         </div>
 
         <div className="hero-art">

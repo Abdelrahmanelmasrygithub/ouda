@@ -21,6 +21,13 @@ export const company = {
   showNameWithLogo: false,
 };
 
+/* المشرف على الخطة (بيظهر في الصفحة الرئيسية تحت زر البداية) */
+export const supervisor = {
+  label: "تحت إشراف",
+  name: "Mansour Mokhtar",
+  role: "Sales Manager",
+};
+
 /* الشاشة الافتتاحية + الصفحة الرئيسية */
 export const hero = {
   introText: "خطة تطوير شركة عودة",

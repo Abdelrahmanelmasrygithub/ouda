@@ -382,6 +382,47 @@ a {
   background: var(--line);
 }
 
+/* المشرف على الخطة */
+.supervisor {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  margin-top: 14px;
+}
+.sv-bar {
+  flex: none;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--primary), var(--primary-2) 55%, var(--accent));
+}
+.sv-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.sv-text small {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+.sv-text strong {
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+.sv-role {
+  font-weight: 700;
+  font-size: 0.9rem;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 /* رسمة المدارات */
 .orbit {
   position: relative;
